@@ -5,11 +5,14 @@ public class LibraryManagementSystem {
 	public static void main(String[] args) {
 		
 		User u = new User("Nicole Currens", "123 Main St.", "512-499-2222");
+		User u1 = new User("Pedro Pascal", "456 Pine St", "713-785-4899");
 		
-		System.out.println("User name: " + u.name);
-		System.out.println("User address: " + u.address);
-		System.out.println("User phone: " + u.phone_number);
-		System.out.println("User UUID: " + u.libraryCard.libraryCardID);
+		User[] users = {u, u1};
+		
+		LibraryManagerDisplay lmd = new LibraryManagerDisplay(users);
+		User currentUser = lmd.displayUserSelection();
+		
+		int choice = lmd.displayMainMenu();
 		
 	}
 
