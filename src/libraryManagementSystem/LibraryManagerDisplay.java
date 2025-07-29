@@ -26,6 +26,7 @@ public class LibraryManagerDisplay {
 		ht.put(1, "Check out materials");
 		ht.put(2, "Check in materials");
 		ht.put(3, "Pay fines");
+		ht.put(4, "Exit");
 		
 		return ht;
 		
@@ -135,7 +136,11 @@ public class LibraryManagerDisplay {
 			displayCheckIn();
 		} else if(choice == 3) {
 			displayFines();
-		}
+		} 
+//			else if(choice == 4) {
+//			System.out.println("Goodbye");
+//			System.exit(0);
+//		}
 		
 	}
 	
