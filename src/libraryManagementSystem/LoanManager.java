@@ -10,6 +10,7 @@ public class LoanManager {
     private Map<String, User> usersById;
     private Map<String, Loan> loansById;
 
+    // TODO should this be a singleton, only one loan manager per program
     public LoanManager() {
         usersById = new HashMap<>();
         loansById = new HashMap<>();
@@ -21,6 +22,11 @@ public class LoanManager {
 
     public void createLoan(String userId, LoanableMaterials material, LocalDate checkOutDate) {
         User user = usersById.get(userId);
+        if (checkOutDate == null) {
+        	// If check out date is passed as null, the loan takes place today
+        	checkOutDate = LocalDate.now();
+        }
+        
         if (user != null) {
         	int type = determineLoanLength(material);
         	Loan loan;

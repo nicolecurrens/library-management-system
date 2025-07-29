@@ -1,16 +1,16 @@
 package libraryManagementSystem;
 
+import java.time.LocalDate;
+
 public abstract class Loan {
 	// Loan is between one user and one material
-	public String checkOutDate;
-	public String dueDate;
-//	public String dueDate;
-//	public String checkInDate;
+	public LocalDate checkOutDate;
+	public LocalDate dueDate;
 	public boolean renewed = false;
 	public User user;
 	public LoanableMaterials material;
 	
-	public Loan(User u, LoanableMaterials m, String checkOutDate) {
+	public Loan(User u, LoanableMaterials m, LocalDate checkOutDate) {
 		this.user = u;
 		this.material = m;
 		this.checkOutDate = checkOutDate;
@@ -25,7 +25,9 @@ public abstract class Loan {
 		}
 	}
 	
-	public abstract String calculateDueDate(String checkOutDate);
+	public abstract void calculateDueDate();
+	
+	public abstract LocalDate getDueDate();
 	
 	public User getUser() {
 		return this.user;
