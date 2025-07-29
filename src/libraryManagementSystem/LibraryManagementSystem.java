@@ -30,6 +30,7 @@ public class LibraryManagementSystem {
 		Materials[] materials = {catch22, warAndPeace, sl5, plato, dune, parasite,
 				whiteAlbum, dict, dewey, p, p1};
 		
+		// Begin program
 		LibraryManagerDisplay lmd = new LibraryManagerDisplay(users, materials);
 		User currentUser = lmd.displayUserSelection();
 		

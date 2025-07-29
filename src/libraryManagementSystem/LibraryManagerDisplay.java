@@ -102,7 +102,7 @@ public class LibraryManagerDisplay {
 		System.out.print("Please select which book you would like to check out: ");
 		int materialNumber = getUserInput();
 		System.out.println("");
-		Materials m = materials.get(materialNumber); // Because materials also contains unloanable material, the numbering is going to get kinda weird, not sure if its a problem
+		Materials m = materials.get(materialNumber);
 		System.out.print("You have chosen ");
 		m.printTitle();
 		// TODO implement checking user permission, setting up loan
