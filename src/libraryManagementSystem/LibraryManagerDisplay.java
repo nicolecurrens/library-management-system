@@ -58,6 +58,8 @@ public class LibraryManagerDisplay {
 		selection = input.nextInt();
         System.out.println("");
         return selection;
+        
+        // TODO add a way to exit
 		
 	}
 	
