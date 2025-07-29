@@ -40,11 +40,16 @@ public class LibraryManagementSystem {
 		LibraryManagerDisplay lmd = new LibraryManagerDisplay(users, materials);
 		User currentUser = lmd.displayUserSelection();
 		
-		int choice = lmd.displayMainMenu();
+		while(true) {
+			int choice = lmd.displayMainMenu();
+			if(choice == 4) {
+				System.out.println("Goodbye");
+				System.exit(0);
+			}
+			
+			lmd.directToSubMenu(choice, currentUser);
 		
-		lmd.directToSubMenu(choice, currentUser);
-		
-		// TODO handle exiting program, or should display do that?
+		}
 	}
 
 }

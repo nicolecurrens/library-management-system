@@ -152,11 +152,6 @@ public class LibraryManagerDisplay {
 		} else if(choice == 3) {
 			displayFines();
 		} 
-//			else if(choice == 4) {
-//			System.out.println("Goodbye");
-//			System.exit(0);
-//		}
-		
 	}
 	
 }
