@@ -22,6 +22,10 @@ public class User {
 		this.libraryCard = new LibraryCard();
 	}
 	
+	public String getID() {
+		return this.libraryCard.libraryCardID;
+	}
+	
 	public User(String userName, String userAddress, String userPhone, boolean child) {
 		// Overloaded constructor for child user
 		this.name = userName;
@@ -46,6 +50,10 @@ public class User {
     		System.out.print("Loan");
     		// TODO fix
     	}
+    }
+    
+    public List<Loan> getLoans() {
+    	return this.loans;
     }
 	
 	public boolean canCheckOut() {
