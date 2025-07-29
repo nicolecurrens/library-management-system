@@ -1,6 +1,7 @@
 package libraryManagementSystem;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class LibraryManagerDisplay {
@@ -97,23 +98,38 @@ public class LibraryManagerDisplay {
 	}
 	
 	public Materials handleCheckOut() {
-		displayCheckOut();
+		displayMaterials();
 		System.out.print("Please select which book you would like to check out: ");
 		int materialNumber = getUserInput();
 		System.out.println("");
-		Materials m = materials.get(materialNumber);
+		Materials m = materials.get(materialNumber); // Because materials also contains unloanable material, the numbering is going to get kinda weird, not sure if its a problem
 		System.out.print("You have chosen ");
 		m.printTitle();
 		// TODO implement checking user permission, setting up loan
 		return m;
 	}
 	
-	public void displayCheckOut() {
+	public void displayMaterials() {
+		ArrayList<Materials> unloanable = new ArrayList<>();
+		
 		System.out.println("Here are the materials we have at the library: ");
+		System.out.println("Materials available for check out: ");
 		for(int i = 0; i < materials.size(); i++) {
-			System.out.print(i + ": ");
+			// TODO this is super inefficient, is there a better way
 			Materials m = materials.get(i);
-			m.printTitle();
+			if (m instanceof LoanableMaterials) {
+				System.out.print(i + ": ");
+				m.printTitle();
+			} else unloanable.add(m);
+		}
+		
+		System.out.println('\n');
+		
+		// Now print un-loanable materials
+		System.out.println("These materials are in the library, but not available for check out: ");
+		for(int i = 0; i < unloanable.size(); i++) {
+			Materials m = unloanable.get(i);
+			System.out.println(m.toString()); // TODO I think this means Loanable materials need to implement toString as well
 		}
 	}
 	

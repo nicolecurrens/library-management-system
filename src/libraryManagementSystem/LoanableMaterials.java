@@ -1,6 +1,7 @@
 package libraryManagementSystem;
 
 public class LoanableMaterials extends Materials {
+	//TODO go through subclasses and see if we need to add anything here
 	
 	public double value;
 	
