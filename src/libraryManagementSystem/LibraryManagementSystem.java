@@ -30,6 +30,12 @@ public class LibraryManagementSystem {
 		Materials[] materials = {catch22, warAndPeace, sl5, plato, dune, parasite,
 				whiteAlbum, dict, dewey, p, p1};
 		
+		// Set up Loans
+		LoanManager loanManager = new LoanManager();
+		loanManager.createLoan(u, plato, null);
+		loanManager.createLoan(u, warAndPeace, null);
+		System.out.println(loanManager.getLoansForUser(u));
+		
 		// Begin program
 		LibraryManagerDisplay lmd = new LibraryManagerDisplay(users, materials);
 		User currentUser = lmd.displayUserSelection();

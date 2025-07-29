@@ -92,9 +92,8 @@ public class LibraryManagerDisplay {
 		
 	}
 	
-	public static void displayCurrentLoans() {
-		
-		
+	public static void displayCurrentLoans(User u) {
+		u.showLoans();
 	}
 	
 	public Materials handleCheckOut() {
@@ -145,7 +144,7 @@ public class LibraryManagerDisplay {
 	
 	public void directToSubMenu(int choice, User currentUser) {
 		if(choice == 0) {
-			displayCurrentLoans();
+			displayCurrentLoans(currentUser);
 		} else if(choice == 1) {
 			handleCheckOut();
 		} else if(choice == 2) {

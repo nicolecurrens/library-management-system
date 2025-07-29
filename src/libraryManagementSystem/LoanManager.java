@@ -20,26 +20,29 @@ public class LoanManager {
         usersById.put(user.getID(), user);
     }
 
-    public void createLoan(String userId, LoanableMaterials material, LocalDate checkOutDate) {
-        User user = usersById.get(userId);
+    public void createLoan(User u, LoanableMaterials material, LocalDate checkOutDate) {
+    	String userID = u.getID();
+        
+        // Add user to list if not already there
+        if (usersById.get(userID) == null) {
+        	usersById.put(userID, u);
+        }
+        
         if (checkOutDate == null) {
         	// If check out date is passed as null, the loan takes place today
         	checkOutDate = LocalDate.now();
         }
         
-        if (user != null) {
-        	int type = determineLoanLength(material);
-        	Loan loan;
-        	if(type == 2) {
-        		loan = new Loan_2week(user, material, checkOutDate);
-        	} else {
-        		// it's a 3 week loan
-        		loan = new Loan_3week(user, material, checkOutDate);
-        	}
-            user.addLoan(loan);
-            // TODO what to do about loan ID
-            loansById.put(loanId, loan);
-        }
+    	int type = determineLoanLength(material);
+    	Loan loan;
+    	if(type == 2) {
+    		loan = new Loan_2week(u, material, checkOutDate);
+    	} else {
+    		// it's a 3 week loan
+    		loan = new Loan_3week(u, material, checkOutDate);
+    	}
+        u.addLoan(loan);
+        loansById.put(loan.loanID, loan);
     }
     
     public int determineLoanLength(LoanableMaterials m) {

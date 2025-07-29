@@ -47,8 +47,9 @@ public class User {
 
     public void showLoans()  {
     	for(int i = 0; i < loans.size(); i++) {
-    		System.out.print("Loan");
-    		// TODO fix
+    		Loan l = loans.get(i);
+    		l.material.printTitle();
+    		System.out.println("due on: " + l.dueDate);
     	}
     }
     

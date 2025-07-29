@@ -1,6 +1,7 @@
 package libraryManagementSystem;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public abstract class Loan {
 	// Loan is between one user and one material
@@ -9,11 +10,13 @@ public abstract class Loan {
 	public boolean renewed = false;
 	public User user;
 	public LoanableMaterials material;
+	public String loanID;
 	
 	public Loan(User u, LoanableMaterials m, LocalDate checkOutDate) {
 		this.user = u;
 		this.material = m;
 		this.checkOutDate = checkOutDate;
+		this.loanID = generateLoanID();
 	}
 	
 	public boolean can_renew() {
@@ -39,6 +42,12 @@ public abstract class Loan {
 	
 	public void renew() {
 		this.renewed = true;
+	}
+	
+	public String generateLoanID() {
+		UUID uuid = UUID.randomUUID();
+        return uuid.toString();
+        
 	}
 	
 }
