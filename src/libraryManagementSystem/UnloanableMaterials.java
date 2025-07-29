@@ -11,6 +11,11 @@ public abstract class UnloanableMaterials extends Materials {
     public String getTitle() {
         return title;
     }
+    
+    @Override
+	public void printTitle() {
+		System.out.println(this.title);
+	}
 
     // Abstract method to identify type
     public abstract String getType();

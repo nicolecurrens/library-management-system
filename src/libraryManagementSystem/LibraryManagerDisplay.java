@@ -104,7 +104,7 @@ public class LibraryManagerDisplay {
 		Materials m = materials.get(materialNumber);
 		System.out.print("You have chosen ");
 		m.printTitle();
-		// TODO implement checking user permission, setting up loan
+		// TODO implement checking user permission, setting up loan - actual check out stuff
 		return m;
 	}
 	
@@ -122,23 +122,23 @@ public class LibraryManagerDisplay {
 			} else unloanable.add(m);
 		}
 		
-		System.out.println('\n');
+		System.out.println();
 		
 		// Now print un-loanable materials
 		System.out.println("These materials are in the library, but not available for check out: ");
 		for(int i = 0; i < unloanable.size(); i++) {
 			Materials m = unloanable.get(i);
-			System.out.println(m.toString()); // TODO I think this means Loanable materials need to implement toString as well
+			System.out.println(m.toString());
 		}
 	}
 	
 	public static void displayCheckIn() {
-		
+		// TODO implement
 		
 	}
 	
 	public static void displayFines() {
-		
+		// TODO implement
 		
 	}
 	

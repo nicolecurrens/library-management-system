@@ -13,8 +13,4 @@ public class Loan_3week extends Loan {
 		this.dueDate = this.checkOutDate.plusWeeks(3);
 	}
 	
-	public LocalDate getDueDate() {
-		return this.dueDate;
-	}
-	
 }

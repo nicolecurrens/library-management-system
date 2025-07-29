@@ -7,8 +7,6 @@ public class Magazine extends UnloanableMaterials {
         super(title);
         this.issue = issue;
     }
-
-    // TODO should print issue number as well
     
     @Override
     public String getType() {
@@ -16,8 +14,8 @@ public class Magazine extends UnloanableMaterials {
     }
 
 	@Override
-	public void printTitle() {
-		System.out.println(this.title);
+	public String toString() {
+		return this.getType() + ": " + this.title + ", issue: " + this.issue;
 		
 	}
 }

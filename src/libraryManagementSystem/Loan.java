@@ -30,8 +30,6 @@ public abstract class Loan {
 	
 	public abstract void calculateDueDate();
 	
-	public abstract LocalDate getDueDate();
-	
 	public User getUser() {
 		return this.user;
 	}
@@ -48,6 +46,10 @@ public abstract class Loan {
 		UUID uuid = UUID.randomUUID();
         return uuid.toString();
         
+	}
+	
+	public LocalDate getDueDate() {
+		return this.dueDate;
 	}
 	
 }

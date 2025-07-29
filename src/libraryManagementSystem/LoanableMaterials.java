@@ -11,7 +11,7 @@ public class LoanableMaterials extends Materials {
 	}
 	
 	public void printTitle() {
-		System.out.print(this.title + ", ");
+		System.out.println(this.title);
 	}
 	
 	public double calculate_fine(int days) {
