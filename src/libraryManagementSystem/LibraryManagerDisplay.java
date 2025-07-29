@@ -8,24 +8,13 @@ public class LibraryManagerDisplay {
 	Scanner input = new Scanner(System.in); // TODO Ideally we'd close this scanner at the end of main to prevent memory leaks
 	Hashtable<Integer, User> userSelection = new Hashtable<>();
 	Hashtable<Integer, String> mainMenu = new Hashtable<>();
-
-
-//	private JTextField firstNumber  = new JTextField(10);
-//	private JLabel additionLabel = new JLabel("+");
-//	private JLabel subtractionLabel = new JLabel("-");
-//	private JLabel multiplicationLabel = new JLabel("*");
-//	private JLabel divisionLabel = new JLabel("/");
-//	private JTextField secondNumber = new JTextField(10);
-//	private JButton addButton = new JButton("Add");
-//	private JButton subtractButton = new JButton("Subtract");
-//	private JButton divideButton = new JButton("Divide");
-//	private JButton multiplyButton = new JButton("Multiply");
-//	private JTextField calcSolution = new JTextField(10);
+	Hashtable<Integer, Materials> materials = new Hashtable<>();
 	
-	LibraryManagerDisplay(User[] users){
+	LibraryManagerDisplay(User[] users, Materials[] materials){
 		
 		this.userSelection = setUpUserSelection(users);
 		this.mainMenu = setUpMainMenu();
+		this.materials = setUpMaterials(materials);
 
 	}
 	
@@ -47,6 +36,16 @@ public class LibraryManagerDisplay {
 		for(int i = 0; i < users.length; i++) {
 			User u = users[i];
 			ht.put(i, u);
+		}
+		
+		return ht;
+	}
+	
+	private Hashtable<Integer, Materials> setUpMaterials(Materials[] materials) {
+		Hashtable<Integer, Materials> ht = new Hashtable<>();
+		for(int i = 0; i < materials.length; i++) {
+			Materials m = materials[i];
+			ht.put(i, m);
 		}
 		
 		return ht;
@@ -91,5 +90,53 @@ public class LibraryManagerDisplay {
 		
 	}
 	
+	public static void displayCurrentLoans() {
+		
+		
+	}
+	
+	public Materials handleCheckOut() {
+		displayCheckOut();
+		System.out.print("Please select which book you would like to check out: ");
+		int materialNumber = getUserInput();
+		System.out.println("");
+		Materials m = materials.get(materialNumber);
+		System.out.print("You have chosen ");
+		m.printTitle();
+		// TODO implement checking user permission, setting up loan
+		return m;
+	}
+	
+	public void displayCheckOut() {
+		System.out.println("Here are the materials we have at the library: ");
+		for(int i = 0; i < materials.size(); i++) {
+			System.out.print(i + ": ");
+			Materials m = materials.get(i);
+			m.printTitle();
+		}
+	}
+	
+	public static void displayCheckIn() {
+		
+		
+	}
+	
+	public static void displayFines() {
+		
+		
+	}
+	
+	public void directToSubMenu(int choice, User currentUser) {
+		if(choice == 0) {
+			displayCurrentLoans();
+		} else if(choice == 1) {
+			handleCheckOut();
+		} else if(choice == 2) {
+			displayCheckIn();
+		} else if(choice == 3) {
+			displayFines();
+		}
+		
+	}
 	
 }

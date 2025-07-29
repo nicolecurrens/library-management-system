@@ -6,6 +6,7 @@ public class User {
 	public String address;
 	public String phone_number;
 	public LibraryCard libraryCard;
+	public boolean child;
 	
 	public User(String userName, String userAddress, String userPhone) {
 		
