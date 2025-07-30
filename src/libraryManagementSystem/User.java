@@ -9,14 +9,16 @@ public class User {
 	public String address;
 	public String phone_number;
 	public LibraryCard libraryCard;
-	public boolean child = false;
+	public int age;
+	public boolean child;
 	private List<Loan> loans;
 	
-	public User(String userName, String userAddress, String userPhone) {
+	public User(String userName, String userAddress, String userPhone, int userAge) {
 		
 		this.name = userName;
 		this.address = userAddress;
 		this.phone_number = userPhone;
+		this.age = userAge;
 		this.loans = new ArrayList<>();
 		
 		this.libraryCard = new LibraryCard();
@@ -31,10 +33,10 @@ public class User {
 		this.name = userName;
 		this.address = userAddress;
 		this.phone_number = userPhone;
+		this.age = 12; // Default age for child
 		this.loans = new ArrayList<>();
 		
 		this.libraryCard = new LibraryCard();
-		this.child = true;
 	}
 	
     public void addLoan(Loan loan) {
@@ -58,7 +60,7 @@ public class User {
     }
 	
 	public boolean canCheckOut() {
-		if(this.child) {
+		if(this.age <= 12) {
 			// Children can only check out 5 materials at a time
 			if(loans.size() >= 5) {
 				return false;

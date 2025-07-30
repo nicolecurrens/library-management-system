@@ -1,8 +1,8 @@
 package libraryManagementSystem;
 
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Scanner;
 
 public class LibraryManagerDisplay {
 	// This class handles the console output
@@ -96,17 +96,50 @@ public class LibraryManagerDisplay {
 		u.showLoans();
 	}
 	
-	public Materials handleCheckOut() {
-		displayMaterials();
-		System.out.print("Please select which book you would like to check out: ");
-		int materialNumber = getUserInput();
-		System.out.println("");
-		Materials m = materials.get(materialNumber);
-		System.out.print("You have chosen ");
-		m.printTitle();
+		public Materials handleCheckOut(User user) {
+    displayMaterials();
+    System.out.print("Please select which book you would like to check out: ");
+    int materialNumber = getUserInput();
+    System.out.println();
+
+    Materials m = materials.get(materialNumber);
+    System.out.print("You have chosen ");
+    m.printTitle();
+
+    if (!(m instanceof LoanableMaterials)) {
+        System.out.println("Sorry, this item cannot be checked out.");
+        return null;
+    }
+
+    if (!m.isAvailable()) {
+        System.out.println("Sorry, this item is not available for checkout.");
+        return null;
+    }
+
+    if (user.canCheckOut() == false && user.getLoans().size() >= 5) {
+        System.out.println("Children are limited to 5 checked-out items.");
+        return null;
+    }
+
+    Loan newLoan;
+    if (m instanceof Book && ((Book) m).bestseller) {
+        newLoan = new Loan_2week(user, (LoanableMaterials) m, java.time.LocalDate.now());
+    } else if (m instanceof Book) {
+        newLoan = new Loan_3week(user, (LoanableMaterials) m, java.time.LocalDate.now());
+    } else if (m instanceof AV) {
+        newLoan = new Loan_2week(user, (LoanableMaterials) m, java.time.LocalDate.now());
+    } else {
+        System.out.println("Unknown material type.");
+        return null;
+    }
+
+    user.addLoan(newLoan);
+    m.setAvailable(false); // Mark as unavailable
+    System.out.println("Checkout successful! Due date: " + newLoan.dueDate.toString());
+
+    return m;
+}
 		// TODO implement checking user permission, setting up loan - actual check out stuff
-		return m;
-	}
 	
 	public void displayMaterials() {
 		ArrayList<Materials> unloanable = new ArrayList<>();
@@ -116,10 +149,12 @@ public class LibraryManagerDisplay {
 		for(int i = 0; i < materials.size(); i++) {
 			// TODO this is super inefficient, is there a better way
 			Materials m = materials.get(i);
-			if (m instanceof LoanableMaterials) {
+			if (m instanceof LoanableMaterials && m.isAvailable()) {
 				System.out.print(i + ": ");
 				m.printTitle();
-			} else unloanable.add(m);
+			} else if (!(m instanceof LoanableMaterials)) {
+				unloanable.add(m);
+			}
 		}
 		
 		System.out.println();
@@ -146,7 +181,7 @@ public class LibraryManagerDisplay {
 		if(choice == 0) {
 			displayCurrentLoans(currentUser);
 		} else if(choice == 1) {
-			handleCheckOut();
+			handleCheckOut(currentUser);
 		} else if(choice == 2) {
 			displayCheckIn();
 		} else if(choice == 3) {

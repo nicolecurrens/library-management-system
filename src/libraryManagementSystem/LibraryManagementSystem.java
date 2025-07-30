@@ -5,9 +5,9 @@ public class LibraryManagementSystem {
 	public static void main(String[] args) {
 		
 		// Set up users
-		User u = new User("Nicole Currens", "123 Main St.", "512-499-2222");
-		User u1 = new User("Pedro Pascal", "456 Pine St", "713-785-4899");
-		User u2 = new User("Elmo", "123 Sesame St.", "111-111-1111", true); // Child user
+		User u = new User("Nicole Currens", "123 Main St.", "512-499-2222", 20);
+		User u1 = new User("Pedro Pascal", "456 Pine St", "713-785-4899", 20);
+		User u2 = new User("Elmo", "123 Sesame St.", "111-111-1111", 5); // Child user
 		
 		User[] users = {u, u1, u2};
 		
