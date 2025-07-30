@@ -10,12 +10,14 @@ public class LibraryManagerDisplay {
 	Hashtable<Integer, User> userSelection = new Hashtable<>();
 	Hashtable<Integer, String> mainMenu = new Hashtable<>();
 	Hashtable<Integer, Materials> materials = new Hashtable<>();
+	private LoanManager loanManager;
 	
-	LibraryManagerDisplay(User[] users, Materials[] materials){
+	LibraryManagerDisplay(User[] users, Materials[] materials, LoanManager loanManager){
 		
 		this.userSelection = setUpUserSelection(users);
 		this.mainMenu = setUpMainMenu();
 		this.materials = setUpMaterials(materials);
+		this.loanManager = loanManager;
 
 	}
 	
@@ -103,6 +105,11 @@ public class LibraryManagerDisplay {
     System.out.println();
 
     Materials m = materials.get(materialNumber);
+    if (m == null) {
+        System.out.println("Invalid selection.");
+        return null;
+    }
+    
     System.out.print("You have chosen ");
     m.printTitle();
 
@@ -116,28 +123,29 @@ public class LibraryManagerDisplay {
         return null;
     }
 
-    if (user.canCheckOut() == false && user.getLoans().size() >= 5) {
-        System.out.println("Children are limited to 5 checked-out items.");
+    if (!user.canCheckOut()) {
+        System.out.println("You have reached your checkout limit.");
         return null;
     }
 
-    Loan newLoan;
-    if (m instanceof Book && ((Book) m).bestseller) {
-        newLoan = new Loan_2week(user, (LoanableMaterials) m, java.time.LocalDate.now());
-    } else if (m instanceof Book) {
-        newLoan = new Loan_3week(user, (LoanableMaterials) m, java.time.LocalDate.now());
-    } else if (m instanceof AV) {
-        newLoan = new Loan_2week(user, (LoanableMaterials) m, java.time.LocalDate.now());
-    } else {
-        System.out.println("Unknown material type.");
+    // Use LoanManager to create the loan (delegation)
+    try {
+        loanManager.createLoan(user, (LoanableMaterials) m, java.time.LocalDate.now());
+        m.setAvailable(false); // Mark as unavailable
+        System.out.println("Checkout successful!");
+        
+        // Get the most recent loan to display due date
+        java.util.List<Loan> userLoans = user.getLoans();
+        if (!userLoans.isEmpty()) {
+            Loan latestLoan = userLoans.get(userLoans.size() - 1);
+            System.out.println("Due date: " + latestLoan.getDueDate());
+        }
+        
+        return m;
+    } catch (Exception e) {
+        System.out.println("Error creating loan: " + e.getMessage());
         return null;
     }
-
-    user.addLoan(newLoan);
-    m.setAvailable(false); // Mark as unavailable
-    System.out.println("Checkout successful! Due date: " + newLoan.dueDate.toString());
-
-    return m;
 }
 		// TODO implement checking user permission, setting up loan - actual check out stuff
 	

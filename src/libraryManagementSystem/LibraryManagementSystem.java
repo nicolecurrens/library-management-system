@@ -37,7 +37,7 @@ public class LibraryManagementSystem {
 		System.out.println(loanManager.getLoansForUser(u));
 		
 		// Begin program
-		LibraryManagerDisplay lmd = new LibraryManagerDisplay(users, materials);
+		LibraryManagerDisplay lmd = new LibraryManagerDisplay(users, materials, loanManager);
 		User currentUser = lmd.displayUserSelection();
 		
 		while(true) {
