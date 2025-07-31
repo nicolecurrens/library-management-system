@@ -12,6 +12,7 @@ public class User {
 	public int age;
 	public boolean child;
 	private List<Loan> loans;
+	private List<Fine> fines = new ArrayList<>();
 	
 	public User(String userName, String userAddress, String userPhone, int userAge) {
 		
