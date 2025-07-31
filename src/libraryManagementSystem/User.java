@@ -67,5 +67,13 @@ public class User {
 			} else return true;
 		} else return true; // All other users can check out unlimited items
 	}
+	 
+    public void addFine(Fine fine) {
+    fines.add(fine);
+    }
+
+    public List<Fine> getUnpaidFines() {
+    return fines.stream().filter(f -> !f.isPaid()).toList();
+    }
 
 }
