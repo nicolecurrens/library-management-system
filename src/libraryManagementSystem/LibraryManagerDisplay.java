@@ -1,5 +1,6 @@
 package libraryManagementSystem;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -192,14 +193,13 @@ public class LibraryManagerDisplay {
 	    }
 	    
 	    // Figure out due date
-	     LocalDate returnDate = LocalDate.now();
+	    LocalDate returnDate = LocalDate.now();
 	    LocalDate dueDate = l.getDueDate();
 
 	    // Check if it's overdue
-	    if (l.isOverdue(returnDate)) {
-	        long daysLate = java.time.temporal.ChronoUnit.DAYS.between(dueDate, returnDate);
-	        double fineAmount = daysLate * 0.25; // $0.25 per day
-	        System.out.printf("This item is overdue by %d day(s). Fine due: $%.2f%n", daysLate, fineAmount);
+	    if (l.isOverdue(returnDate, dueDate)) {
+	        System.out.println("This item is overdue. You will be charged a fine.");
+	        System.out.println("Please pay your fine by returning to the main menu.");
 	        // TODO: Add fine object
 	    }
 
@@ -212,9 +212,6 @@ public class LibraryManagerDisplay {
 
 	    System.out.println("Check-in successful!");
 	    return l;
-	    // Figure out if it's late, create a fine object if it is
-	    // Then remove the loan from loan manager, mark material available
-		
 	}
 	
 	public static void displayFines() {
