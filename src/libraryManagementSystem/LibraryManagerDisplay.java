@@ -192,7 +192,26 @@ public class LibraryManagerDisplay {
 	    }
 	    
 	    // Figure out due date
-	    
+	     LocalDate returnDate = LocalDate.now();
+	    LocalDate dueDate = l.getDueDate();
+
+	    // Check if it's overdue
+	    if (l.isOverdue(returnDate)) {
+	        long daysLate = java.time.temporal.ChronoUnit.DAYS.between(dueDate, returnDate);
+	        double fineAmount = daysLate * 0.25; // $0.25 per day
+	        System.out.printf("This item is overdue by %d day(s). Fine due: $%.2f%n", daysLate, fineAmount);
+	        // TODO: Add fine object
+	    }
+
+	    // Mark material as available again
+	    l.getMaterial().setAvailable(true);
+
+	    // Remove the loan
+	    user.removeLoan(l);
+	    loanManager.removeLoan(l.loanID);
+
+	    System.out.println("Check-in successful!");
+	    return l;
 	    // Figure out if it's late, create a fine object if it is
 	    // Then remove the loan from loan manager, mark material available
 		
