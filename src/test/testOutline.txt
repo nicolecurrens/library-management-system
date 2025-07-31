@@ -1,0 +1,16 @@
+Test1: Test for when a child uses the system, and tries to check out a 6th item
+Details:
+
+Test2: Test Checking out a book, and then returning that same book, then test the same with AV material
+Details:
+
+Test3: Test returning a book that has fines on it, and then paying those fines
+Details:
+
+Test4: Test the ability to renew a loaned out book/AV
+Details:
+
+Test5: Test the ability to place a request on a Book and AV
+Details:
+
+Depending on time, may or may not make test cases, manual may be better.
