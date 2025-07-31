@@ -1,0 +1,16 @@
+Test1: Test for when a child uses the system, and tries to check out a 6th item
+Details: Needs child user in the data base, with 5 materials checked out
+
+Test2: Test Checking out a book, and then returning that same book, then test the same with AV material and a best seller
+Details: Needs a user in the system, and a regular book, a best seller, and an AV material
+
+Test3: Test returning a book that has fines on it, and then paying those fines
+Details: Needs the fine system working, an ability to pay those fines, and a user with an overdue book.
+
+Test4: Test the ability to renew a loaned out book/AV
+Details: Needs renewal system, and a book and AV material loaned out by the User
+
+Test5: Test the ability to place a request on a Book and AV
+Details: Needs request system, an open book and AV
+
+Depending on time, may or may not make test cases, manual may be better.
