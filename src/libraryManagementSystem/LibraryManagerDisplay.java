@@ -216,11 +216,32 @@ public class LibraryManagerDisplay {
 	    // Then remove the loan from loan manager, mark material available
 		
 	}
+
 	
-	public static void displayFines() {
-		// TODO implement
-		
-	}
+	
+	 public static void displayFines(User user) {
+        List<Fine> unpaidFines = user.getUnpaidFines();
+
+        if (unpaidFines.isEmpty()) {
+            System.out.println("You have no unpaid fines.");
+            return;
+        }
+
+        System.out.println("Your unpaid fines:");
+        for (int i = 0; i < unpaidFines.size(); i++) {
+            System.out.println(i + ": " + unpaidFines.get(i));
+        }
+
+        System.out.println("Enter the number of the fine to pay (or -1 to skip):");
+        int fineChoice = Integer.parseInt(getUserInput()); // <-- FIX here
+
+        if (fineChoice >= 0 && fineChoice < unpaidFines.size()) {
+            unpaidFines.get(fineChoice).pay();
+            System.out.println("Fine paid successfully.");
+        } else {
+            System.out.println("No fines paid.");
+        }
+    }
 	
 	public void directToSubMenu(int choice, User currentUser) {
 		if(choice == 0) {
