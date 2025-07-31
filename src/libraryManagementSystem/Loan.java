@@ -52,4 +52,12 @@ public abstract class Loan {
 		return this.dueDate;
 	}
 	
+	public boolean isOverdue(LocalDate returnDate, LocalDate dueDate) {
+		if (returnDate.isAfter(dueDate)) {
+			return true; // it's past the due date
+		} else {
+			return false;
+		}
+	}
+	
 }

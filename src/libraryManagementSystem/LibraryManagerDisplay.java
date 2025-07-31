@@ -2,6 +2,7 @@ package libraryManagementSystem;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Scanner;
 
 public class LibraryManagerDisplay {
@@ -61,8 +62,6 @@ public class LibraryManagerDisplay {
 		selection = input.nextInt();
         System.out.println("");
         return selection;
-        
-        // TODO add a way to exit
 		
 	}
 	
@@ -98,56 +97,56 @@ public class LibraryManagerDisplay {
 		u.showLoans();
 	}
 	
-		public Materials handleCheckOut(User user) {
-    displayMaterials();
-    System.out.print("Please select which book you would like to check out: ");
-    int materialNumber = getUserInput();
-    System.out.println();
-
-    Materials m = materials.get(materialNumber);
-    if (m == null) {
-        System.out.println("Invalid selection.");
-        return null;
-    }
-    
-    System.out.print("You have chosen ");
-    m.printTitle();
-
-    if (!(m instanceof LoanableMaterials)) {
-        System.out.println("Sorry, this item cannot be checked out.");
-        return null;
-    }
-
-    if (!m.isAvailable()) {
-        System.out.println("Sorry, this item is not available for checkout.");
-        return null;
-    }
-
-    if (!user.canCheckOut()) {
-        System.out.println("You have reached your checkout limit.");
-        return null;
-    }
-
-    // Use LoanManager to create the loan (delegation)
-    try {
-        loanManager.createLoan(user, (LoanableMaterials) m, java.time.LocalDate.now());
-        m.setAvailable(false); // Mark as unavailable
-        System.out.println("Checkout successful!");
-        
-        // Get the most recent loan to display due date
-        java.util.List<Loan> userLoans = user.getLoans();
-        if (!userLoans.isEmpty()) {
-            Loan latestLoan = userLoans.get(userLoans.size() - 1);
-            System.out.println("Due date: " + latestLoan.getDueDate());
-        }
-        
-        return m;
-    } catch (Exception e) {
-        System.out.println("Error creating loan: " + e.getMessage());
-        return null;
-    }
-}
-		// TODO implement checking user permission, setting up loan - actual check out stuff
+	public Materials handleCheckOut(User user) {
+	    displayMaterials();
+	    System.out.print("Please select which book you would like to check out: ");
+	    int materialNumber = getUserInput();
+	    System.out.println();
+	
+	    Materials m = materials.get(materialNumber);
+	    if (m == null) {
+	        System.out.println("Invalid selection.");
+	        return null;
+	    }
+	    
+	    System.out.print("You have chosen ");
+	    m.printTitle();
+	
+	    if (!(m instanceof LoanableMaterials)) {
+	        System.out.println("Sorry, this item cannot be checked out.");
+	        return null;
+	    }
+	
+	    if (!m.isAvailable()) {
+	    	// TODO we'll need to handle requests here
+	        System.out.println("Sorry, this item is not available for checkout.");
+	        return null;
+	    }
+	
+	    if (!user.canCheckOut()) {
+	        System.out.println("You have reached your checkout limit.");
+	        return null;
+	    }
+	
+	    // Use LoanManager to create the loan (delegation)
+	    try {
+	        loanManager.createLoan(user, (LoanableMaterials) m, java.time.LocalDate.now());
+	        m.setAvailable(false); // Mark as unavailable
+	        System.out.println("Checkout successful!");
+	        
+	        // Get the most recent loan to display due date
+	        java.util.List<Loan> userLoans = user.getLoans();
+	        if (!userLoans.isEmpty()) {
+	            Loan latestLoan = userLoans.get(userLoans.size() - 1);
+	            System.out.println("Due date: " + latestLoan.getDueDate());
+	        }
+	        
+	        return m;
+	    } catch (Exception e) {
+	        System.out.println("Error creating loan: " + e.getMessage());
+	        return null;
+	    }
+	}
 	
 	public void displayMaterials() {
 		ArrayList<Materials> unloanable = new ArrayList<>();
@@ -175,8 +174,27 @@ public class LibraryManagerDisplay {
 		}
 	}
 	
-	public static void displayCheckIn() {
-		// TODO implement
+	public Object handleCheckIn(User user) {
+		System.out.println("Which book would you like to check in? ");
+		List<Loan> loan = user.getLoans();
+		for(int i = 0; i < loan.size(); i ++) {
+			System.out.print(i + ": ");
+			System.out.println(loan.get(i).material.title);
+		}
+		
+		int loanNumber = getUserInput();
+	    System.out.println();
+	
+	    Loan l = loan.get(loanNumber);
+	    if (l == null) {
+	        System.out.println("Invalid selection.");
+	        return null;
+	    }
+	    
+	    // Figure out due date
+	    
+	    // Figure out if it's late, create a fine object if it is
+	    // Then remove the loan from loan manager, mark material available
 		
 	}
 	
@@ -187,14 +205,14 @@ public class LibraryManagerDisplay {
 	
 	public void directToSubMenu(int choice, User currentUser) {
 		if(choice == 0) {
-			displayCurrentLoans(currentUser);
+			displayCurrentLoans(currentUser); // TODO add renew loan here?
 		} else if(choice == 1) {
 			handleCheckOut(currentUser);
 		} else if(choice == 2) {
-			displayCheckIn();
+			handleCheckIn(currentUser);
 		} else if(choice == 3) {
 			displayFines();
-		} 
+		} // TODO should probably add something to see requests too
 	}
 	
 }
