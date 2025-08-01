@@ -219,7 +219,7 @@ public class LibraryManagerDisplay {
 
 	
 	
-	 public static void displayFines(User user) {
+	 public void displayFines(User user) {
         List<Fine> unpaidFines = user.getUnpaidFines();
 
         if (unpaidFines.isEmpty()) {
@@ -233,7 +233,7 @@ public class LibraryManagerDisplay {
         }
 
         System.out.println("Enter the number of the fine to pay (or -1 to skip):");
-        int fineChoice = Integer.parseInt(getUserInput()); // <-- FIX here
+        int fineChoice = getUserInput();
 
         if (fineChoice >= 0 && fineChoice < unpaidFines.size()) {
             unpaidFines.get(fineChoice).pay();
@@ -251,7 +251,7 @@ public class LibraryManagerDisplay {
 		} else if(choice == 2) {
 			handleCheckIn(currentUser);
 		} else if(choice == 3) {
-			displayFines();
+			displayFines(currentUser);
 		} // TODO should probably add something to see requests too
 	}
 	
