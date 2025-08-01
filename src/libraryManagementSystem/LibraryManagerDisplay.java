@@ -105,13 +105,11 @@ public class LibraryManagerDisplay {
 	public static void renewLoan(User u, Loan l){
 		if(l.can_renew() == true) {
 			if(l instanceof Loan_2week){
-				LocalDate newDueDate = l.getDueDate().plusWeeks(2);
-				//set the due date to the new one
-				System.out.println("Loan renewed for another 3 weeks. New due date: " + newDueDate);
+				l.calculateDueDate();
+				System.out.println("Loan renewed for another 2 weeks. New due date: " + newDueDate);
 			}
 			else if(l instanceof Loan_3week) {
-				LocalDate newDueDate = l.getDueDate().plusWeeks(3);
-				//set the due date to the new one
+				l.calculateDueDate();
 				System.out.println("Loan renewed for another 3 weeks. New due date: " + newDueDate);
 			}
 		}
