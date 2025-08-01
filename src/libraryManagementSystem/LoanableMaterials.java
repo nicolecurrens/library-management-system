@@ -11,7 +11,14 @@ public class LoanableMaterials extends Materials {
 	}
 	
 	public void printTitle() {
-		System.out.println(this.title);
+		System.out.print(this.title);
+		if (this instanceof Book) {
+			Book b = (Book) this;
+			if (b.bestseller) {
+				System.out.print( " (Bestseller!) ");
+			}
+		}
+		System.out.println();
 	}
 	
 	public double calculate_fine(long days) {
