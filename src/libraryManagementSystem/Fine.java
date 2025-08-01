@@ -39,7 +39,7 @@ public class Fine {
     	LocalDate today = LocalDate.now();
     	long daysBetween = ChronoUnit.DAYS.between(dueDate, today);
     	
-    	return m.calculate_fine((int) daysBetween);
+    	return m.calculate_fine(daysBetween);
     }
 
     @Override

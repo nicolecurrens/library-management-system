@@ -14,7 +14,7 @@ public class LoanableMaterials extends Materials {
 		System.out.println(this.title);
 	}
 	
-	public double calculate_fine(int days) {
+	public double calculate_fine(long days) {
 		double fine = 0;
 		for(int i = 0; i < days; i++) {
 			fine += .1;
