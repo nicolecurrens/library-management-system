@@ -200,7 +200,8 @@ public class LibraryManagerDisplay {
 	    if (l.isOverdue(returnDate, dueDate)) {
 	        System.out.println("This item is overdue. You will be charged a fine.");
 	        System.out.println("Please pay your fine by returning to the main menu.");
-	        // TODO: Add fine object
+	        Fine f = new Fine(l);
+	        user.addFine(f);
 	    }
 
 	    // Mark material as available again
