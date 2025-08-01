@@ -1,4 +1,5 @@
 package libraryManagementSystem;
+import java.time.LocalDate;
 
 public class LibraryManagementSystem {
 	
@@ -16,9 +17,11 @@ public class LibraryManagementSystem {
 		Book warAndPeace = new Book("War and Peace", 30.50);
 		Book sl5 = new Book("Slaughterhouse 5", 15.75);
 		Book plato = new Book("Plato's Republic", 25.75);
+		Book greenEgg = new Book("Green Eggs and Ham", 8.00);
 		AV dune = new AV("Dune Part I", 12.30);
 		AV parasite = new AV("Parasite", 15.00);
 		AV whiteAlbum = new AV("White Album", 10.50);
+		AV sesameStreet = new AV("Sesame Street", 10.00);
 		warAndPeace.updateBestsellerStatus(true);
 		
 		// Set up unloanable materials
@@ -28,13 +31,14 @@ public class LibraryManagementSystem {
 		Magazine p1 = new Magazine("People", "Jan 2025");
 		
 		Materials[] materials = {catch22, warAndPeace, sl5, plato, dune, parasite,
-				whiteAlbum, dict, dewey, p, p1};
+				whiteAlbum, sesameStreet, greenEgg, dict, dewey, p, p1};
 		
 		// Set up Loans
 		LoanManager loanManager = new LoanManager();
 		loanManager.createLoan(u, plato, null);
 		loanManager.createLoan(u, warAndPeace, null);
 		loanManager.createLoan(u1, parasite, null);
+		loanManager.createLoan(u2, sesameStreet, LocalDate.of(2025, 6, 12));
 		
 		RequestManager rm = new RequestManager();
 		Request r = new Request(u1, plato, rm);

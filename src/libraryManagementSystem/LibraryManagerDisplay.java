@@ -33,8 +33,7 @@ public class LibraryManagerDisplay {
 		ht.put(1, "Check out materials");
 		ht.put(2, "Check in materials");
 		ht.put(3, "Pay fines");
-		ht.put(4, "Renew Loan");
-		ht.put(5, "Exit");
+		ht.put(4, "Exit");
 		
 		return ht;
 	
