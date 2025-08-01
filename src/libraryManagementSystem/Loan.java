@@ -19,10 +19,13 @@ public abstract class Loan {
 		this.loanID = generateLoanID();
 	}
 	
-	public boolean can_renew() {
+	public boolean can_renew(RequestManager rm) {
 		if(this.renewed == false) {
-			// TODO then need to check if there are open requests
-			return true;
+			if(rm.requestExists(this.material)) {
+				return false;
+			} else {
+				return true;
+			}
 		} else {
 			return false;
 		}
@@ -40,6 +43,9 @@ public abstract class Loan {
 	
 	public void renew() {
 		this.renewed = true;
+		
+		LocalDate newDueDate = this.dueDate.plusWeeks(2);
+		this.dueDate = newDueDate;
 	}
 	
 	public String generateLoanID() {

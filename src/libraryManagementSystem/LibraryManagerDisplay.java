@@ -13,13 +13,15 @@ public class LibraryManagerDisplay {
 	Hashtable<Integer, String> mainMenu = new Hashtable<>();
 	Hashtable<Integer, Materials> materials = new Hashtable<>();
 	private LoanManager loanManager;
+	private RequestManager requestManager;
 	
-	LibraryManagerDisplay(User[] users, Materials[] materials, LoanManager loanManager){
+	LibraryManagerDisplay(User[] users, Materials[] materials, LoanManager loanManager, RequestManager requestManager){
 		
 		this.userSelection = setUpUserSelection(users);
 		this.mainMenu = setUpMainMenu();
 		this.materials = setUpMaterials(materials);
 		this.loanManager = loanManager;
+		this.requestManager = requestManager;
 
 	}
 	
@@ -95,32 +97,55 @@ public class LibraryManagerDisplay {
 		
 	}
 	
-	public static void displayCurrentLoans(User u) {
+	public void displayCurrentLoans(User u) {
 		System.out.println("Loans: ");
 		u.showLoans();
 		
 		System.out.println("\nRequests: ");
 		u.showRequests();
+		
+		System.out.println("Would you like to renew a loan? Please type 1 for yes or 2 for no: ");
+		int ans  = getUserInput();
+	    System.out.println();
+	    
+	    if(ans == 1) {
+	    	List<Loan> loanList = u.getLoans();
+	    	for(int i = 0; i < loanList.size(); i++) {
+	    		Loan l = loanList.get(i);
+	    		System.out.println(i + ": " + l.material.title);
+	    	}
+	    	
+	    	System.out.println("Select which loan you would like to renew: ");
+	    	int loanNum = getUserInput();
+	    	Loan loanToRenew = loanList.get(loanNum);
+	    	
+	    	if(loanToRenew.can_renew(requestManager)) {
+	    		loanToRenew.renew();
+	    		System.out.println("We have successfully renewed your loan!");
+	    	} else {
+	    		System.out.println("Sorry, others are waiting on your loan, and we can't renew it.");
+	    	}
+	    }
 	}
 
-	public static void renewLoan(User u){
-		System.out.println("Loans: ");
-		u.showLoans();
-		/*if(l.can_renew() == true) {
-			if(l instanceof Loan_2week){
-				l.calculateDueDate();
-				System.out.println("Loan renewed for another 2 weeks. New due date: " + newDueDate);
-			}
-			else if(l instanceof Loan_3week) {
-				l.calculateDueDate();
-				System.out.println("Loan renewed for another 3 weeks. New due date: " + newDueDate);
-			}
-		}
-		else {
-			System.out.println("This loan cannot be renewed.");
-		}*/
-		//Need to rewrite
-	}
+//	public static void renewLoan(User u){
+//		System.out.println("Loans: ");
+//		u.showLoans();
+//		/*if(l.can_renew() == true) {
+//			if(l instanceof Loan_2week){
+//				l.calculateDueDate();
+//				System.out.println("Loan renewed for another 2 weeks. New due date: " + newDueDate);
+//			}
+//			else if(l instanceof Loan_3week) {
+//				l.calculateDueDate();
+//				System.out.println("Loan renewed for another 3 weeks. New due date: " + newDueDate);
+//			}
+//		}
+//		else {
+//			System.out.println("This loan cannot be renewed.");
+//		}*/
+//		//Need to rewrite
+//	}
 	
 	public Materials handleCheckOut(User user) {
 	    displayMaterials();
@@ -150,7 +175,7 @@ public class LibraryManagerDisplay {
 		    System.out.println();
 		    
 		    if(ans == 1) {
-		    	Request r = new Request(user, m);
+		    	Request r = new Request(user, m, requestManager);
 		    	user.addRequest(r);
 		    	System.out.println("You have successfully created a request for " + m.title);
 		    }
@@ -283,9 +308,9 @@ public class LibraryManagerDisplay {
 		} else if(choice == 3) {
 			displayFines(currentUser);
 		}
-		else if(choice == 4) {
-			renewLoan(currentUser);
-		}
+//		else if(choice == 4) {
+//			renewLoan(currentUser);
+//		}
 	}
 	
 }

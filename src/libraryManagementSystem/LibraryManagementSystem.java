@@ -36,15 +36,18 @@ public class LibraryManagementSystem {
 		loanManager.createLoan(u, warAndPeace, null);
 		loanManager.createLoan(u1, parasite, null);
 		
+		RequestManager rm = new RequestManager();
+		Request r = new Request(u1, plato, rm);
+		
 		// Begin program
-		LibraryManagerDisplay lmd = new LibraryManagerDisplay(users, materials, loanManager);
+		LibraryManagerDisplay lmd = new LibraryManagerDisplay(users, materials, loanManager, rm);
 		User currentUser = lmd.displayUserSelection();
 		
 		System.out.println("Welcome to the library management system, " + currentUser.name);
 		
 		while(true) {
 			int choice = lmd.displayMainMenu();
-			if(choice == 5) {
+			if(choice == 4) {
 				System.out.println("Goodbye");
 				System.exit(0);
 			}
