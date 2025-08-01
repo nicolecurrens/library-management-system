@@ -22,7 +22,9 @@ public class LoanableMaterials extends Materials {
 				break;
 			}
 		}
-		
+
+		fine = Math.round(fine * 100.0) / 100.0;
+
 		return fine;
 		
 	}
