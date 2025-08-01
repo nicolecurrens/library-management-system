@@ -13,6 +13,7 @@ public class User {
 	public boolean child;
 	private List<Loan> loans;
 	private List<Fine> fines = new ArrayList<>();
+	private List<Request> requests = new ArrayList<>();
 	
 	public User(String userName, String userAddress, String userPhone, int userAge) {
 		
@@ -75,6 +76,25 @@ public class User {
 
     public List<Fine> getUnpaidFines() {
     return fines.stream().filter(f -> !f.isPaid()).toList();
+    }
+    
+    public List<Request> getRequests() {
+    	return this.requests;
+    }
+    
+    public void addRequest(Request r) {
+    	this.requests.add(r);
+    }
+    
+    public void showRequests() {
+    	if (requests.size() == 0) {
+    		System.out.println("No requests.");
+    	} else {
+	    	for(int i = 0; i < requests.size(); i++) {
+	    		Request r = requests.get(i);
+	    		System.out.println(r.getMaterial().title);
+	    	}
+    	}
     }
 
 }
