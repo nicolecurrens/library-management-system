@@ -34,11 +34,13 @@ public class LibraryManagementSystem {
 		LoanManager loanManager = new LoanManager();
 		loanManager.createLoan(u, plato, null);
 		loanManager.createLoan(u, warAndPeace, null);
-		System.out.println(loanManager.getLoansForUser(u));
+		loanManager.createLoan(u1, parasite, null);
 		
 		// Begin program
 		LibraryManagerDisplay lmd = new LibraryManagerDisplay(users, materials, loanManager);
 		User currentUser = lmd.displayUserSelection();
+		
+		System.out.println("Welcome to the library management system, " + currentUser.name);
 		
 		while(true) {
 			int choice = lmd.displayMainMenu();

@@ -1,6 +1,7 @@
 package libraryManagementSystem;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Fine {
     private double amount;
@@ -8,15 +9,16 @@ public class Fine {
     private LocalDate dateIssued;
     private Loan loan;
 
-    public Fine(double amount, Loan loan) {
-        this.amount = amount;
+    public Fine(Loan loan) {
         this.loan = loan;
         this.paid = false;
         this.dateIssued = LocalDate.now();
+        
+        this.amount = calculateAmount();
     }
 
     public double getAmount() {
-        return amount;
+        return calculateAmount();
     }
 
     public boolean isPaid() {
@@ -29,6 +31,15 @@ public class Fine {
 
     public Loan getLoan() {
         return loan;
+    }
+    
+    public double calculateAmount() {
+    	LoanableMaterials m = loan.getMaterial();
+    	LocalDate dueDate = loan.dueDate;
+    	LocalDate today = LocalDate.now();
+    	long daysBetween = ChronoUnit.DAYS.between(dueDate, today);
+    	
+    	return m.calculate_fine((int) daysBetween);
     }
 
     @Override

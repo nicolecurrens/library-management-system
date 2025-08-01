@@ -95,7 +95,11 @@ public class LibraryManagerDisplay {
 	}
 	
 	public static void displayCurrentLoans(User u) {
+		System.out.println("Loans: ");
 		u.showLoans();
+		
+		System.out.println("\nRequests: ");
+		u.showRequests();
 	}
 	
 	public Materials handleCheckOut(User user) {
@@ -119,9 +123,17 @@ public class LibraryManagerDisplay {
 	    }
 	
 	    if (!m.isAvailable()) {
-	    	// TODO we'll need to handle requests here
+	    	// Create a request
 	        System.out.println("Sorry, this item is not available for checkout.");
-	        return null;
+	        System.out.println("Would you like to make a request for it instead? 1 for yes or 2 for no: ");
+	        int ans  = getUserInput();
+		    System.out.println();
+		    
+		    if(ans == 1) {
+		    	Request r = new Request(user, m);
+		    	user.addRequest(r);
+		    	System.out.println("You have successfully created a request for " + m.title);
+		    }
 	    }
 	
 	    if (!user.canCheckOut()) {
@@ -200,7 +212,8 @@ public class LibraryManagerDisplay {
 	    if (l.isOverdue(returnDate, dueDate)) {
 	        System.out.println("This item is overdue. You will be charged a fine.");
 	        System.out.println("Please pay your fine by returning to the main menu.");
-	        // TODO: Add fine object
+	        Fine f = new Fine(l);
+	        user.addFine(f);
 	    }
 
 	    // Mark material as available again
@@ -249,7 +262,7 @@ public class LibraryManagerDisplay {
 			handleCheckIn(currentUser);
 		} else if(choice == 3) {
 			displayFines(currentUser);
-		} // TODO should probably add something to see requests too
+		}
 	}
 	
 }
