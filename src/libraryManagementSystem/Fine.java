@@ -7,7 +7,7 @@ public class Fine {
     private double amount;
     private boolean paid;
     private LocalDate dateIssued;
-    private Loan loan;
+    public Loan loan;
 
     public Fine(Loan loan) {
         this.loan = loan;

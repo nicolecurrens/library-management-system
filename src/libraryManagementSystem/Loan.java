@@ -17,6 +17,8 @@ public abstract class Loan {
 		this.material = m;
 		this.checkOutDate = checkOutDate;
 		this.loanID = generateLoanID();
+		
+		m.setAvailable(false);
 	}
 	
 	public boolean can_renew(RequestManager rm) {

@@ -30,6 +30,14 @@ public class User {
 		return this.libraryCard.libraryCardID;
 	}
 	
+	public void printUserInfo() {
+		System.out.println("Library Card ID: " + this.getID());
+		System.out.println("Name: " + this.name);
+		System.out.println("Address: " + this.address);
+		System.out.println("Phone Number: "+ this.phone_number);
+		System.out.println("Age: " + this.age);
+	}
+	
 	public User(String userName, String userAddress, String userPhone, boolean child) {
 		// Overloaded constructor for child user
 		this.name = userName;

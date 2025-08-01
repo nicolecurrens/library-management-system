@@ -146,7 +146,7 @@ public class LibraryManagerDisplay {
 //		//Need to rewrite
 //	}
 	
-	public Materials handleCheckOut(User user) {
+	public void handleCheckOut(User user) {
 	    displayMaterials();
 	    System.out.print("Please select which book you would like to check out: ");
 	    int materialNumber = getUserInput();
@@ -155,54 +155,53 @@ public class LibraryManagerDisplay {
 	    Materials m = materials.get(materialNumber);
 	    if (m == null) {
 	        System.out.println("Invalid selection.");
-	        return null;
+	    } else {
+	    	System.out.print("You have chosen ");
+		    m.printTitle();
+		
+		    if (!(m instanceof LoanableMaterials)) {
+		        System.out.println("Sorry, this item cannot be checked out.");
+		        return;
+		    } else if (!m.isAvailable()) {
+		    	// Create a request
+		        System.out.println("Sorry, this item is not available for checkout.");
+		        System.out.println("Would you like to make a request for it instead? 1 for yes or 2 for no: ");
+		        int ans  = getUserInput();
+			    System.out.println();
+			    
+			    if(ans == 1) {
+			    	Request r = new Request(user, m, requestManager);
+			    	user.addRequest(r);
+			    	System.out.println("You have successfully created a request for " + m.title);
+			    }
+			    return;
+		    } else if (!user.canCheckOut()) {
+		        System.out.println("You have reached your checkout limit.");
+		        return;
+		    } else {
+		    	// Use LoanManager to create the loan (delegation)
+			    try {
+			        loanManager.createLoan(user, (LoanableMaterials) m, java.time.LocalDate.now());
+			        m.setAvailable(false); // Mark as unavailable
+			        System.out.println("Checkout successful!");
+			        
+			        // Get the most recent loan to display due date
+			        java.util.List<Loan> userLoans = user.getLoans();
+			        if (!userLoans.isEmpty()) {
+			            Loan latestLoan = userLoans.get(userLoans.size() - 1);
+			            System.out.println("Due date: " + latestLoan.getDueDate());
+			        }
+			        
+			        return;
+			    } catch (Exception e) {
+			        System.out.println("Error creating loan: " + e.getMessage());
+			        return;
+			    }
+		    }
+
 	    }
 	    
-	    System.out.print("You have chosen ");
-	    m.printTitle();
-	
-	    if (!(m instanceof LoanableMaterials)) {
-	        System.out.println("Sorry, this item cannot be checked out.");
-	        return null;
-	    }
-	
-	    if (!m.isAvailable()) {
-	    	// Create a request
-	        System.out.println("Sorry, this item is not available for checkout.");
-	        System.out.println("Would you like to make a request for it instead? 1 for yes or 2 for no: ");
-	        int ans  = getUserInput();
-		    System.out.println();
-		    
-		    if(ans == 1) {
-		    	Request r = new Request(user, m, requestManager);
-		    	user.addRequest(r);
-		    	System.out.println("You have successfully created a request for " + m.title);
-		    }
-	    }
-	
-	    if (!user.canCheckOut()) {
-	        System.out.println("You have reached your checkout limit.");
-	        return null;
-	    }
-	
-	    // Use LoanManager to create the loan (delegation)
-	    try {
-	        loanManager.createLoan(user, (LoanableMaterials) m, java.time.LocalDate.now());
-	        m.setAvailable(false); // Mark as unavailable
-	        System.out.println("Checkout successful!");
-	        
-	        // Get the most recent loan to display due date
-	        java.util.List<Loan> userLoans = user.getLoans();
-	        if (!userLoans.isEmpty()) {
-	            Loan latestLoan = userLoans.get(userLoans.size() - 1);
-	            System.out.println("Due date: " + latestLoan.getDueDate());
-	        }
-	        
-	        return m;
-	    } catch (Exception e) {
-	        System.out.println("Error creating loan: " + e.getMessage());
-	        return null;
-	    }
+	    
 	}
 	
 	public void displayMaterials() {
@@ -213,7 +212,7 @@ public class LibraryManagerDisplay {
 		for(int i = 0; i < materials.size(); i++) {
 			// TODO this is super inefficient, is there a better way
 			Materials m = materials.get(i);
-			if (m instanceof LoanableMaterials && m.isAvailable()) {
+			if (m instanceof LoanableMaterials) {
 				System.out.print(i + ": ");
 				m.printTitle();
 			} else if (!(m instanceof LoanableMaterials)) {
@@ -283,7 +282,9 @@ public class LibraryManagerDisplay {
 
         System.out.println("Your unpaid fines:");
         for (int i = 0; i < unpaidFines.size(); i++) {
-            System.out.println(i + ": " + unpaidFines.get(i));
+        	Fine f = unpaidFines.get(i);
+            System.out.println(i + ": " + f);
+            System.out.println("This item was due on " + f.loan.dueDate);
         }
 
         System.out.println("Enter the number of the fine to pay (or -1 to skip):");
