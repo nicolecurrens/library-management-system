@@ -44,7 +44,7 @@ public class LibraryManagementSystem {
 		
 		while(true) {
 			int choice = lmd.displayMainMenu();
-			if(choice == 4) {
+			if(choice == 5) {
 				System.out.println("Goodbye");
 				System.exit(0);
 			}

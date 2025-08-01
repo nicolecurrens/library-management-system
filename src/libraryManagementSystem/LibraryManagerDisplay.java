@@ -31,10 +31,11 @@ public class LibraryManagerDisplay {
 		ht.put(1, "Check out materials");
 		ht.put(2, "Check in materials");
 		ht.put(3, "Pay fines");
-		ht.put(4, "Exit");
+		ht.put(4, "Renew Loan");
+		ht.put(5, "Exit");
 		
 		return ht;
-		
+	
 	}
 	
 	private Hashtable<Integer, User> setUpUserSelection(User[] users) {
@@ -100,6 +101,25 @@ public class LibraryManagerDisplay {
 		
 		System.out.println("\nRequests: ");
 		u.showRequests();
+	}
+
+	public static void renewLoan(User u){
+		System.out.println("Loans: ");
+		u.showLoans();
+		/*if(l.can_renew() == true) {
+			if(l instanceof Loan_2week){
+				l.calculateDueDate();
+				System.out.println("Loan renewed for another 2 weeks. New due date: " + newDueDate);
+			}
+			else if(l instanceof Loan_3week) {
+				l.calculateDueDate();
+				System.out.println("Loan renewed for another 3 weeks. New due date: " + newDueDate);
+			}
+		}
+		else {
+			System.out.println("This loan cannot be renewed.");
+		}*/
+		//Need to rewrite
 	}
 	
 	public Materials handleCheckOut(User user) {
@@ -262,6 +282,9 @@ public class LibraryManagerDisplay {
 			handleCheckIn(currentUser);
 		} else if(choice == 3) {
 			displayFines(currentUser);
+		}
+		else if(choice == 4) {
+			renewLoan(currentUser);
 		}
 	}
 	
