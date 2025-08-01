@@ -101,6 +101,24 @@ public class LibraryManagerDisplay {
 		System.out.println("\nRequests: ");
 		u.showRequests();
 	}
+
+	public static void renewLoan(User u, Loan l){
+		if(l.can_renew() == true) {
+			if(l instanceof Loan_2week){
+				LocalDate newDueDate = l.getDueDate().plusWeeks(2);
+				//set the due date to the new one
+				System.out.println("Loan renewed for another 3 weeks. New due date: " + newDueDate);
+			}
+			else if(l instanceof Loan_3week) {
+				LocalDate newDueDate = l.getDueDate().plusWeeks(3);
+				//set the due date to the new one
+				System.out.println("Loan renewed for another 3 weeks. New due date: " + newDueDate);
+			}
+		}
+		else {
+			System.out.println("This loan cannot be renewed.");
+		}
+	}
 	
 	public Materials handleCheckOut(User user) {
 	    displayMaterials();
